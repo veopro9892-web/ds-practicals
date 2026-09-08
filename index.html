@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Practicals — Quick Revision</title>
+<style>
+:root{
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --text:#172033;
+  --muted:#667085;
+  --border:#e4e7ec;
+  --accent:#635bff;
+  --code:#101828;
+  --code-text:#e6edf3;
+  --nav:#ffffff;
+  --shadow:0 8px 28px rgba(16,24,40,.08);
+}
+[data-theme="dark"]{
+  --bg:#0b1020;
+  --card:#111827;
+  --text:#f2f4f7;
+  --muted:#98a2b3;
+  --border:#253047;
+  --accent:#8b82ff;
+  --code:#080c15;
+  --code-text:#e6edf3;
+  --nav:#111827;
+  --shadow:0 8px 28px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.6;
+}
+header{
+  position:sticky;top:0;z-index:20;
+  background:var(--nav);border-bottom:1px solid var(--border);
+  backdrop-filter:blur(12px);
+}
+.header-inner{
+  max-width:1100px;margin:auto;padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.logo{font-weight:800;font-size:18px}
+.actions{display:flex;gap:8px}
+button,.nav-link{
+  border:1px solid var(--border);background:var(--card);color:var(--text);
+  border-radius:10px;padding:9px 12px;cursor:pointer;font:inherit;
+}
+button:hover,.nav-link:hover{border-color:var(--accent)}
+.hero{max-width:1100px;margin:0 auto;padding:46px 20px 28px}
+.badge{
+  display:inline-block;padding:5px 10px;border-radius:999px;
+  background:rgba(99,91,255,.12);color:var(--accent);font-size:13px;font-weight:700;
+}
+h1{font-size:clamp(32px,6vw,56px);line-height:1.05;margin:14px 0 10px}
+.hero p{max-width:680px;color:var(--muted);font-size:17px}
+.layout{max-width:1100px;margin:auto;padding:0 20px 60px;display:grid;grid-template-columns:230px 1fr;gap:24px}
+.sidebar{
+  position:sticky;top:78px;align-self:start;
+  background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;
+  box-shadow:var(--shadow)
+}
+.sidebar h3{font-size:13px;text-transform:uppercase;color:var(--muted);margin:4px 8px 10px}
+.nav-link{display:block;text-decoration:none;margin:5px 0;padding:9px 10px}
+.content{min-width:0}
+section{
+  background:var(--card);border:1px solid var(--border);border-radius:18px;
+  padding:24px;margin-bottom:20px;box-shadow:var(--shadow);
+}
+.section-number{color:var(--accent);font-weight:800;font-size:13px;text-transform:uppercase}
+h2{margin:4px 0 8px;font-size:28px;line-height:1.2}
+h3{margin-top:28px;margin-bottom:10px}
+p{margin-top:8px}
+.callout{
+  border-left:4px solid var(--accent);background:rgba(99,91,255,.08);
+  padding:12px 14px;border-radius:8px;margin:14px 0;
+}
+.code-wrap{position:relative;margin:14px 0}
+pre{
+  margin:0;background:var(--code);color:var(--code-text);
+  padding:18px;overflow:auto;border-radius:12px;
+  font:13px/1.65 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+.copy{
+  position:absolute;right:10px;top:10px;
+  background:#1d2939;color:#fff;border-color:#344054;font-size:12px;
+}
+.copy.copied{background:#12b76a;border-color:#12b76a}
+.output{
+  background:rgba(16,24,40,.05);border:1px dashed var(--border);
+  border-radius:10px;padding:12px;font-family:ui-monospace,monospace;white-space:pre-wrap;
+}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.tip{padding:14px;border:1px solid var(--border);border-radius:12px}
+kbd{background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:2px 6px}
+footer{text-align:center;color:var(--muted);padding:20px}
+@media(max-width:800px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:relative;top:auto}
+  .nav-list{display:grid;grid-template-columns:repeat(2,1fr);gap:5px}
+  .nav-link{margin:0}
+}
+@media(max-width:520px){
+  .hero{padding-top:32px}
+  section{padding:18px}
+  .grid{grid-template-columns:1fr}
+  .nav-list{grid-template-columns:1fr}
+  h2{font-size:24px}
+  pre{font-size:12px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="logo">📚 DS Practicals</div>
+    <div class="actions">
+      <button id="themeBtn" onclick="toggleTheme()">🌙 Dark</button>
+      <button onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <span class="badge">QUICK REVISION</span>
+  <h1>Data Structures Practicals</h1>
+  <p>All your practical code in one clean, mobile-friendly place. Use the navigation, copy code with one tap, and switch to dark mode for studying at night.</p>
+</div>
+
+<div class="layout">
+<aside class="sidebar">
+  <h3>Practicals</h3>
+  <div class="nav-list">
+    <a class="nav-link" href="#p1">1 · Time Complexity</a>
+    <a class="nav-link" href="#p2">2 · Stack</a>
+    <a class="nav-link" href="#p3">3 · Singly Linked List</a>
+    <a class="nav-link" href="#p4">4 · Queue</a>
+    <a class="nav-link" href="#p5">5 · Circular Linked List</a>
+    <a class="nav-link" href="#revision">⭐ Quick Revision</a>
+  </div>
+</aside>
+
+<main class="content">
+
+<section id="p1">
+  <div class="section-number">Practical 1</div>
+  <h2>Time Complexity Using Step Counting</h2>
+  <p>Find the time complexity of algorithms using the step-counting method. This practical contains a non-recursive sum algorithm and a recursive factorial algorithm.</p>
+
+  <h3>1A · Non-Recursive Sum</h3>
+  <p>Add all elements of an array and count the steps.</p>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>def sum_algorithm(arr):
+
+    step = 0
+    total = 0
+
+    step += 1
+
+    for i in range(len(arr)):
+        total = total + arr[i]
+        step += 1
+
+    print("Sum =", total)
+
+    step += 1
+
+    print("Total Steps =", step)
+    print("Time Complexity = O(n)")
+
+
+arr = [10, 20, 30, 40, 50]
+
+sum_algorithm(arr)</pre>
+  </div>
+  <div class="output">Sum = 150
+Total Steps = 7
+Time Complexity = O(n)</div>
+  <div class="callout"><b>Remember:</b> The loop runs once for every element. If there are <b>n</b> elements, it runs <b>n</b> times, so the time complexity is <b>O(n)</b>.</div>
+
+  <h3>1B · Recursive Factorial</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>step = 0
+
+
+def factorial(n):
+
+    global step
+
+    step += 1
+
+    if n == 0 or n == 1:
+        return 1
+
+    step += 1
+
+    return n * factorial(n - 1)
+
+
+n = 5
+
+result = factorial(n)
+
+print("Factorial =", result)
+print("Total Steps =", step)
+print("Time Complexity = O(n)")</pre>
+  </div>
+  <div class="output">Factorial = 120
+Total Steps = 9
+Time Complexity = O(n)</div>
+  <div class="callout"><b>Remember:</b> It is recursive because <code>factorial()</code> calls itself. For <b>n</b>, it makes about <b>n</b> calls, so the time complexity is <b>O(n)</b>.</div>
+</section>
+
+<section id="p2">
+  <div class="section-number">Practical 2</div>
+  <h2>Stack Using Array</h2>
+  <p>Implement a stack using a Python list.</p>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>stack = []
+
+stack.append(10)
+stack.append(20)
+stack.append(30)
+
+print("Stack:", stack)
+
+item = stack.pop()
+
+print("Deleted:", item)
+
+print("Stack:", stack)
+
+print("Top element:", stack[-1])</pre>
+  </div>
+  <div class="output">Stack: [10, 20, 30]
+Deleted: 30
+Stack: [10, 20]
+Top element: 20</div>
+  <div class="grid">
+    <div class="tip"><b>append()</b><br>Adds an element to the stack.</div>
+    <div class="tip"><b>pop()</b><br>Removes the top/last element.</div>
+    <div class="tip"><b>stack[-1]</b><br>Gives the top element.</div>
+    <div class="tip"><b>LIFO</b><br>Last In, First Out.</div>
+  </div>
+</section>
+
+<section id="p3">
+  <div class="section-number">Practical 3</div>
+  <h2>Singly Linked List</h2>
+  <p>Operations: insert at beginning, insert at end, delete first node, delete last node, search, update and display.</p>
+
+  <h3>3A · Create the Linked List + Display</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>class Node:
+
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+node1 = Node(10)
+node2 = Node(20)
+node3 = Node(30)
+
+node1.next = node2
+node2.next = node3
+
+head = node1
+
+
+def display(head):
+
+    current = head
+
+    while current is not None:
+        print(current.data, end=" -> ")
+        current = current.next
+
+    print("NULL")
+
+
+print("Original Linked List")
+display(head)</pre>
+  </div>
+  <div class="callout">Structure: <b>10 → 20 → 30 → NULL</b><br><br><b>self.data</b> stores the value. <b>self.next</b> stores the link to the next node. <b>head</b> points to the first node.</div>
+
+  <h3>3B · Insert at Beginning</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>print("\nInsert at Beginning")
+
+newNode = Node(5)
+
+newNode.next = head
+head = newNode
+
+display(head)</pre>
+  </div>
+
+  <h3>3C · Insert at End</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>print("\nInsert at End")
+
+newNode = Node(40)
+current = head
+
+while current.next is not None:
+    current = current.next
+
+current.next = newNode
+
+display(head)</pre>
+  </div>
+
+  <h3>3D · Delete First Node</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>print("\nDelete First Node")
+
+head = head.next
+
+display(head)</pre>
+  </div>
+
+  <h3>3E · Delete Last Node</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>print("\nDelete Last Node")
+
+current = head
+
+while current.next.next is not None:
+    current = current.next
+
+current.next = None
+
+display(head)</pre>
+  </div>
+
+  <h3>3F · Search Element</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>print("\nSearch Element")
+
+key = 20
+
+current = head
+found = False
+
+while current is not None:
+
+    if current.data == key:
+        found = True
+        break
+
+    current = current.next
+
+
+if found:
+    print("Element Found")
+else:
+    print("Element Not Found")</pre>
+  </div>
+
+  <h3>3G · Update Node</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>print("\nUpdate Node")
+
+current = head
+
+while current is not None:
+
+    if current.data == 20:
+        current.data = 25
+
+    current = current.next
+
+display(head)</pre>
+  </div>
+</section>
+
+<section id="p4">
+  <div class="section-number">Practical 4</div>
+  <h2>Queue Using Array</h2>
+  <p>Implement a Queue ADT using a Python list, with a maximum size of 5.</p>
+
+  <h3>4A · Enqueue + Display + Main Program</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>queue = []
+
+Max = 5
+
+
+# Enqueue Operation
+
+def enqueue(value):
+
+    if len(queue) == Max:
+        print("Queue Overflow")
+
+    else:
+        queue.append(value)
+        print(value, "inserted into queue")
+
+
+# Display Operation
+
+def display():
+
+    if len(queue) == 0:
+        print("Queue is empty")
+
+    else:
+        print("Queue:", queue)
+
+
+# Main Program
+
+enqueue(10)
+enqueue(20)
+enqueue(30)
+
+display()</pre>
+  </div>
+  <div class="grid">
+    <div class="tip"><b>FIFO</b><br>First In, First Out.</div>
+    <div class="tip"><b>enqueue()</b><br>Adds an element to the queue.</div>
+    <div class="tip"><b>Max = 5</b><br>Maximum queue size.</div>
+    <div class="tip"><b>Queue Overflow</b><br>Occurs when the queue reaches its maximum size.</div>
+  </div>
+</section>
+
+<section id="p5">
+  <div class="section-number">Practical 5</div>
+  <h2>Circular Linked List</h2>
+  <p>Implement a circular linked list and perform insertion, deletion, search, update and display operations.</p>
+
+  <h3>5A · Create Circular Linked List + Display</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>class Node:
+
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+node1 = Node(10)
+node2 = Node(20)
+node3 = Node(30)
+
+node1.next = node2
+node2.next = node3
+node3.next = node1
+
+head = node1
+
+
+def display(head):
+
+    current = head
+
+    while True:
+        print(current.data, end=" -> ")
+        current = current.next
+
+        if current == head:
+            break
+
+    print("Back to head")
+
+
+print("Original Circular Linked List:")
+
+display(head)</pre>
+  </div>
+  <div class="callout">Circular structure: <b>10 → 20 → 30 → back to 10</b><br><br>The last node points to <b>head</b>, not <b>None</b>.</div>
+
+  <h3>5B · Insert at Beginning</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>print("\nInsert at Beginning")
+
+newNode = Node(5)
+
+last = head
+
+while last.next != head:
+    last = last.next
+
+newNode.next = head
+last.next = newNode
+head = newNode
+
+display(head)</pre>
+  </div>
+
+  <h3>5C · Insert at End</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>print("\nInsert at End")
+
+newNode = Node(40)
+
+last = head
+
+while last.next != head:
+    last = last.next
+
+last.next = newNode
+newNode.next = head
+
+display(head)</pre>
+  </div>
+
+  <h3>5D · Delete First Node</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>print("\nDelete First Node")
+
+last = head
+
+while last.next != head:
+    last = last.next
+
+head = head.next
+last.next = head
+
+display(head)</pre>
+  </div>
+
+  <h3>5E · Delete Last Node</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>print("\nDelete Last Node")
+
+current = head
+
+while current.next.next != head:
+    current = current.next
+
+current.next = head
+
+display(head)</pre>
+  </div>
+
+  <h3>5F · Search Element</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>print("\nSearch Element")
+
+key = 20
+
+current = head
+found = False
+
+while True:
+
+    if current.data == key:
+        found = True
+        break
+
+    current = current.next
+
+    if current == head:
+        break
+
+
+if found:
+    print("Element Found")
+else:
+    print("Element Not Found")</pre>
+  </div>
+
+  <h3>5G · Update Node</h3>
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">Copy</button>
+<pre>print("\nUpdate Node")
+
+current = head
+
+while True:
+
+    if current.data == 20:
+        current.data = 25
+
+    current = current.next
+
+    if current == head:
+        break
+
+display(head)</pre>
+  </div>
+</section>
+
+<section id="revision">
+  <div class="section-number">Last-Minute Revision</div>
+  <h2>⭐ Things You Must Remember</h2>
+
+  <div class="grid">
+    <div class="tip"><b>Practical 1</b><br>Sum → O(n)<br>Factorial recursion → O(n)</div>
+    <div class="tip"><b>Practical 2</b><br>Stack → LIFO<br>append() → insert<br>pop() → delete top</div>
+    <div class="tip"><b>Practical 3</b><br>Singly list → last node points to None</div>
+    <div class="tip"><b>Practical 4</b><br>Queue → FIFO<br>append() → enqueue</div>
+    <div class="tip"><b>Practical 5</b><br>Circular list → last node points back to head</div>
+  </div>
+
+  <div class="callout">
+    <b>Quick memory trick:</b><br><br>
+    Stack = <b>LIFO</b> → Last comes out first.<br>
+    Queue = <b>FIFO</b> → First comes out first.<br>
+    Singly linked list = ends at <b>None</b>.<br>
+    Circular linked list = comes <b>back to head</b>.<br>
+    One loop over n elements = usually <b>O(n)</b>.
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer>Made for quick Data Structures practical revision.</footer>
+
+<script>
+function toggleTheme(){
+  const root=document.documentElement;
+  const dark=root.getAttribute("data-theme")==="dark";
+  root.setAttribute("data-theme",dark?"light":"dark");
+  localStorage.setItem("ds-theme",dark?"light":"dark");
+  document.getElementById("themeBtn").textContent=dark?"🌙 Dark":"☀️ Light";
+}
+(function(){
+  const saved=localStorage.getItem("ds-theme");
+  if(saved){
+    document.documentElement.setAttribute("data-theme",saved);
+    document.getElementById("themeBtn").textContent=saved==="dark"?"☀️ Light":"🌙 Dark";
+  }
+})();
+async function copyCode(button){
+  const code=button.parentElement.querySelector("pre").innerText;
+  try{
+    await navigator.clipboard.writeText(code);
+  }catch(e){
+    const area=document.createElement("textarea");
+    area.value=code; document.body.appendChild(area); area.select();
+    document.execCommand("copy"); area.remove();
+  }
+  button.textContent="✓ Copied";
+  button.classList.add("copied");
+  setTimeout(()=>{button.textContent="Copy";button.classList.remove("copied")},1200);
+}
+</script>
+</body>
+</html>
